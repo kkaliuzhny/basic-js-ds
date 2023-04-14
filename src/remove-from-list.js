@@ -27,7 +27,6 @@ const { NotImplementedError } = require('../extensions/index.js');
  */
 
 
-
 function removeKFromList(l,k) 
 {
     let current=l.next;

@@ -2,68 +2,94 @@ const { NotImplementedError } = require('../extensions/index.js');
 
 const { Node } = require('../extensions/list-tree.js');
 
+class BinarySearchTree {
 
-
-class BinarySearchTree
- {
-  
-    constructor()
-    {
-      this.roots=null;
-    }
-
-  root() 
-  {
-    return this.roots;   
+  constructor() {
+    this.roots = null;
   }
 
-  
+  root() {
+    return this.roots;
+  }
 
-  add(value)
-   {
-   this.roots=addValue(this.roots,value);
-    function addValue(node,value)
+  add(data) {
+    this.roots = add_node(this.roots, data);
+    function add_node(node,data)
     {
-      if(!node){return new  Node(value);}
-      if(node.value==value){return node;}
-      if(value<node.value){node.left=addValue(node.left,value);}
-      if(value>node.value){node.right=addValue(node.right,value);}
+      if (!node){ return new Node(data);}
+      if (node.data == data) {return node;}
+      if (data < node.data) { node.left = add_node(node.left, data);}
+      if (data > node.data) { node.right = add_node(node.right, data);}
       return node;
     }
   }
-  
 
-  has(value)
-  {
-    function searchValue(node,val)
+
+  has(data) {
+    return check_item(this.roots, data);
+    function check_item(node, data)
     {
-      if(!node){return false;}
-      else if(node.value==val){return true;}
-      else if(val<node.value){return searchValue(node.left,val);}
-      else{return searchValue(node.right,val);}
+      if (!node){ return false;}
+      if (node.data === data) {return true;}
+      if (data < node.data) { return check_item(node.left, data);}
+      if (data > node.data) { return check_item(node.right, data);}
     }
-    return searchValue(this.roots,value);
-   
   }
 
-  find(val) 
-  {
-    throw new NotImplementedError('Not implemented');
+  find(data) {
+    return check_item(this.roots, data);
+    function check_item(node, data)
+    {
+      if (!node){ return null;}
+      if (node.data === data) {return node;}
+      if (data < node.data) { return check_item(node.left, data);}
+      if (data > node.data) { return check_item(node.right, data);}
+    }
   }
 
-  remove(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  remove(data) {
+    this.roots = removedata(this.roots, data);
+    function removedata(node,data)
+    {
+      if (!node){ return null;}
+      if (data < node.data) { node.left = removedata(node.left, data); return node;}
+      else if (data > node.data) { node.right = removedata(node.right, data); return node;}
+      else 
+      {
+        if (!node.left && !node.right) {return null;}
+        if (!node.left) {node = node.right; return node;}
+        if (!node.right) {node = node.left; return node;}
+
+        let minFromRight = node.right;
+        while(minFromRight.left)
+        {
+          minFromRight = minFromRight.left;
+        }
+        node.data = minFromRight.data;
+        node.right = removedata(node.right, minFromRight.data);
+        return node;
+      }
+    }
   }
 
   min() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    if(!this.roots) {return null;}
+    let node = this.roots;
+    while(node.left)
+    {
+      node = node.left;
+    }
+    return node.data;
   }
 
   max() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    if(!this.roots) {return null;}
+    let node = this.roots;
+    while(node.right)
+    {
+      node = node.right;
+    }
+    return node.data;
   }
 }
 
