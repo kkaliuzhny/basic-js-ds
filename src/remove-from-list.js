@@ -11,6 +11,9 @@ const { NotImplementedError } = require('../extensions/index.js');
  * @return {List}
  *
  * @example
+ * 
+ * 
+ * 
  * For l = [3, 1, 2, 3, 4, 5] and k = 3,
  * the output should be [1, 2, 4, 5]
  *
@@ -22,9 +25,22 @@ const { NotImplementedError } = require('../extensions/index.js');
  *   }
  * }
  */
-function removeKFromList(/* l, k */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+
+
+
+function removeKFromList(l,k) 
+{
+    let current=l.next;
+    while(current.next)
+    {
+      if(current.value==k)
+      {
+        delete current;
+      }
+     current=current.next;
+    }
+    return l;
+  
 }
 
 module.exports = {
