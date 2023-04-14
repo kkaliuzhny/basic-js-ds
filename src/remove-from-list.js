@@ -35,33 +35,35 @@ class ListNode
     
 }
 
-function removeKFromList(l,k) 
-{
-    let current=l;
-    let previous=null;
-    while(current)
-    {
-      if(current.value==k)
-      {
-        if(previous)
-        {
-          previous.next=current.next
-        }
-       else
-       {
-        previous=current.next;
-       }
-      }
-      else if(current.value!=k)
-      {
-        previous.next=current;
-      }
-      current=current.next;
-    }
- return l;
- }
+function removeKFromList(l, k) {
+  while(l.value == k){ l = l.next;}
+  currentNode = l;
+  upcomingNode = currentNode.next;
   
-
+  while(upcomingNode != null)
+  {
+    if(upcomingNode.value == k)
+    {
+      if(currentNode!=null && upcomingNode.next != null)
+      {
+        if((upcomingNode.next).value == upcomingNode.value)
+        {
+          nextTwoNode = upcomingNode.next;
+          currentNode.next =  nextTwoNode.next;
+        }
+        else{
+          currentNode.next = upcomingNode.next;
+        }
+        
+      }
+      if (upcomingNode.next == null) {currentNode.next = null;
+        upcomingNode = null;break;}
+    }
+    currentNode = currentNode.next;
+    upcomingNode = currentNode.next;       
+  }
+  return l;
+}
 
 module.exports = {
   removeKFromList
